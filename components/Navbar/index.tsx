@@ -1,0 +1,59 @@
+"use client";
+import React from "react";
+import { UserButton, useAuth, useUser } from "@clerk/nextjs";
+
+import Wrapper from "../Wrapper";
+import Link from "next/link";
+const links = [
+  {
+    id: 1,
+    label: "Home",
+    url: "/",
+  },
+  {
+    id: 2,
+    label: "History",
+    url: "/history",
+  },
+  {
+    id: 3,
+    label: "Help",
+    url: "/help",
+  },
+];
+
+const Navbar = () => {
+  const { isSignedIn } = useAuth();
+
+  return (
+    <header className="bg-primary ">
+      <Wrapper>
+        <nav className="w-full flex gap-4 items-center">
+          <Link className="h-[100px]" href="/">
+            <img src="./logo_3.png" alt="" className="h-full" />
+          </Link>
+          <ul className="flex gap-4">
+            {links.map((link) => {
+              return (
+                <Link key={link.id} href={link.url}>
+                  {link.label}
+                </Link>
+              );
+            })}
+          </ul>
+          <div className="ml-auto">
+            {isSignedIn ? (
+              <UserButton afterSignOutUrl="/" showName />
+            ) : (
+              <Link href="/sign-in" className="btn-primary">
+                Login
+              </Link>
+            )}
+          </div>
+        </nav>
+      </Wrapper>
+    </header>
+  );
+};
+
+export default Navbar;
