@@ -2,9 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  h2 {
+    @apply text-2xl mb-6 font-bold;
+  }
+}
+
 @layer components {
   .bg-primary {
     @apply bg-yellow-400;
+  }
+
+  .color-primary {
+    @apply text-yellow-500;
   }
 
   .btn-primary {

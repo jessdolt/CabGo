@@ -3,6 +3,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import Wrapper from "@/components/Wrapper";
 import { Inter } from "next/font/google";
+import BookingProvider from "@/hooks/context/BookingProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,14 +18,16 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body>
-          <main className={inter.className}>
-            <Navbar />
-            <Wrapper>{children}</Wrapper>
-          </main>
-        </body>
-      </html>
+      <BookingProvider>
+        <html lang="en">
+          <body>
+            <main className={inter.className}>
+              <Navbar />
+              <Wrapper>{children}</Wrapper>
+            </main>
+          </body>
+        </html>
+      </BookingProvider>
     </ClerkProvider>
   );
 }

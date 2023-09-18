@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { fetchAddress } from "./services";
+import { fetchAddress, retrieveAddress } from "./services";
+import useBooking from "@/hooks/useBooking";
 
 enum SearchType {
   FROM = "from",
@@ -10,14 +11,18 @@ enum SearchType {
 const Booking = () => {
   const fromRef = useRef<HTMLInputElement | null>(null);
   const toRef = useRef<HTMLInputElement | null>(null);
+  const {
+    from: fromValue,
+    to: toValue,
+    updateBooking,
+    handleUpdateCoordinates,
+    coordinates,
+  } = useBooking();
 
-  const [fromValue, setFromValue] = useState("");
-  const [toValue, setToValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [toSuggestions, setToSuggestions] = useState([]);
 
   const fetchData = async (type: SearchType, query: string) => {
-    console.log(type);
     try {
       const data = await fetchAddress(query);
 
@@ -64,35 +69,66 @@ const Booking = () => {
   const handleInputChange = async (type: SearchType, value: string) => {
     switch (type) {
       case SearchType.FROM: {
-        setFromValue(value);
+        updateBooking({ from: value });
         break;
       }
       case SearchType.TO: {
-        setToValue(value);
+        updateBooking({ to: value });
         break;
       }
     }
   };
 
-  const handleValueChange = (type: SearchType, value: string) => {
+  const handleValueChange = async (type: SearchType, suggestion: any) => {
+    const name = suggestion?.name;
+    const address = suggestion?.full_address
+      ? suggestion?.full_address
+      : suggestion?.place_formatted;
+    const finalAddress = `${name} ${address}`;
+    const addressId = suggestion?.mapbox_id;
+
     switch (type) {
       case SearchType.FROM: {
         if (!fromRef.current) return;
 
-        fromRef.current.value = value;
+        fromRef.current.value = finalAddress;
         setSuggestions([]);
-        setFromValue("");
+
+        try {
+          const response = await retrieveAddress(addressId);
+          const [longitude, latitude] =
+            response?.features[0]?.geometry.coordinates;
+
+          handleUpdateCoordinates({ id: 1, longitude, latitude });
+        } catch (e) {
+          console.log(e);
+        }
+        // updateBooking({ from: "" });
         break;
       }
       case SearchType.TO: {
         if (!toRef.current) return;
+        toRef.current.value = finalAddress;
 
-        toRef.current.value = value;
         setToSuggestions([]);
-        setToValue("");
+        try {
+          const response = await retrieveAddress(addressId);
+          const [longitude, latitude] =
+            response?.features[0]?.geometry.coordinates;
+
+          handleUpdateCoordinates({ id: 2, longitude, latitude });
+        } catch (e) {
+          console.log(e);
+        }
+        // updateBooking({ from: "" });
         break;
       }
     }
+  };
+
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+    // console.log(toValue, fromValue);
   };
 
   return (
@@ -100,7 +136,7 @@ const Booking = () => {
       <div className="flex">
         <form className="flex flex-col w-1/2 max-w-[600px] justify-center  gap-6">
           <h1 className="text-4xl font-bold  text-black">
-            Book your <span className="text-yellow-500">Cab&Go</span>
+            Book your <span className="color-primary">Cab&Go</span>
           </h1>
           <div className="flex flex-col">
             <label htmlFor="from" className="mb-2">
@@ -127,10 +163,7 @@ const Booking = () => {
                     <div
                       className="px-4 py-1 cursor-pointer hover:bg-slate-100"
                       onClick={() =>
-                        handleValueChange(
-                          SearchType.FROM,
-                          `${suggestion?.name} ${valueBelow}`
-                        )
+                        handleValueChange(SearchType.FROM, suggestion)
                       }
                     >
                       <p className="font-bold">{suggestion?.name}</p>
@@ -165,10 +198,7 @@ const Booking = () => {
                     <div
                       className="px-4 py-1 cursor-pointer hover:bg-slate-100"
                       onClick={() =>
-                        handleValueChange(
-                          SearchType.TO,
-                          `${suggestion?.name} ${valueBelow}`
-                        )
+                        handleValueChange(SearchType.TO, suggestion)
                       }
                     >
                       <p className="font-bold">{suggestion?.name}</p>
@@ -179,7 +209,13 @@ const Booking = () => {
               </div>
             </div>
           </div>
-          <button className="btn-primary mr-auto mt-2">Find a caber</button>
+          <button
+            className="btn-primary mr-auto mt-2"
+            type="button"
+            onClick={handleSubmit}
+          >
+            Find a caber
+          </button>
         </form>
 
         <div className="h-[660px] flex-1">
