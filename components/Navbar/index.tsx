@@ -4,6 +4,7 @@ import { UserButton, useAuth, useUser } from "@clerk/nextjs";
 
 import Wrapper from "../Wrapper";
 import Link from "next/link";
+import Image from "next/image";
 const links = [
   {
     id: 1,
@@ -30,7 +31,7 @@ const Navbar = () => {
       <Wrapper>
         <nav className="w-full flex gap-4 items-center">
           <Link className="h-[100px]" href="/">
-            <img src="./logo_3.png" alt="" className="h-full" />
+            <Image src="./logo_3.png" alt="" className="h-full" />
           </Link>
           <ul className="flex gap-4">
             {links.map((link) => {

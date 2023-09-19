@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { paymentList } from "./constants";
 import { PaymentMethod } from "./interface";
 import useBooking from "@/hooks/useBooking";
+import Image from "next/image";
 
 const PaymentMethod = () => {
   const { updateBooking, payment } = useBooking();
@@ -25,7 +26,7 @@ const PaymentMethod = () => {
         payment: { ...selectedPayment },
       });
     }
-  }, [selected]);
+  }, [selected, updateBooking]);
 
   return (
     <div>
@@ -44,7 +45,7 @@ const PaymentMethod = () => {
               key={payment.id}
               onClick={() => handleSelected(payment)}
             >
-              <img
+              <Image
                 src={payment.image}
                 alt=""
                 className=" h-full object-contain"

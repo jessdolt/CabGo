@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Car } from "./interface";
 import { carList } from "./constants";
 import useBooking from "@/hooks/useBooking";
+import Image from "next/image";
 
 const Cars = () => {
-  const { from, to, directionDetail, updateBooking, car } = useBooking();
+  const { from, to, directionDetail, updateBooking } = useBooking();
   const [selected, setSelected] = useState<number | null>(null);
 
   const ratePerkm = 0.35;
@@ -22,7 +23,7 @@ const Cars = () => {
         car: { ...selectedCar, price: priceRate * selectedCar.price },
       });
     }
-  }, [selected]);
+  }, [selected, updateBooking, priceRate]);
 
   const handleCarSelect = (car: Car) => {
     if (selected === car.id) setSelected(null);
@@ -46,7 +47,11 @@ const Cars = () => {
               key={car.id}
             >
               <p className="text-center font-bold text-lg">{car.label}</p>
-              <img src={car.image} alt={car.label} className="h-full -mt-6" />
+              <Image
+                src={car.image ? car.image : ""}
+                alt={car.label}
+                className="h-full -mt-6"
+              />
               <p className="-mt-6 text-center font-bold">
                 {from && to && directionDetail && getPrice(car.price)}
               </p>

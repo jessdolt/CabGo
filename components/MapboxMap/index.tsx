@@ -5,6 +5,7 @@ import type { MapRef } from "react-map-gl";
 import useBooking from "@/hooks/useBooking";
 import { retrieveDirections } from "../Booking/services";
 import MapboxRoute from "./MapboxRoute";
+import Image from "next/image";
 const MapboxComponent = () => {
   const mapRef = useRef<MapRef>(null);
   const { coordinates, updateBooking, directionDetail } = useBooking();
@@ -67,7 +68,7 @@ const MapboxComponent = () => {
         duration: 2500,
       });
     }
-  }, [coordinates]);
+  }, [coordinates, updateBooking]);
 
   if (!initialViewState) return <div>Loading...</div>;
 
@@ -92,8 +93,12 @@ const MapboxComponent = () => {
 
       {coordinates.map((data) => {
         return (
-          <Marker longitude={data.longitude} latitude={data.latitude}>
-            <img src="./pin.png" className="w-10 h-10" />
+          <Marker
+            longitude={data.longitude}
+            latitude={data.latitude}
+            key={data.id}
+          >
+            <Image src="./pin.png" className="w-10 h-10" alt="" />
           </Marker>
         );
       })}

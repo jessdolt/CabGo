@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { fetchAddress, retrieveAddress } from "./services";
 import useBooking from "@/hooks/useBooking";
+import Image from "next/image";
 
 enum SearchType {
   FROM = "from",
@@ -161,6 +162,7 @@ const Booking = () => {
 
                   return (
                     <div
+                      key={suggestion?.mapbox_id}
                       className="px-4 py-1 cursor-pointer hover:bg-slate-100"
                       onClick={() =>
                         handleValueChange(SearchType.FROM, suggestion)
@@ -196,6 +198,7 @@ const Booking = () => {
 
                   return (
                     <div
+                      key={suggestion?.mapbox_id}
                       className="px-4 py-1 cursor-pointer hover:bg-slate-100"
                       onClick={() =>
                         handleValueChange(SearchType.TO, suggestion)
@@ -219,7 +222,7 @@ const Booking = () => {
         </form>
 
         <div className="h-[660px] flex-1">
-          <img
+          <Image
             src="./hero_1.png"
             alt=""
             className="h-full  object-contain ml-auto"

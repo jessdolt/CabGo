@@ -1,8 +1,7 @@
-import { Routes } from "@/hooks/context/BookingProvider";
 import * as React from "react";
 import { Source, Layer } from "react-map-gl";
 
-const MapboxRoute = ({ coordinates }: { coordinates: Routes }) => {
+const MapboxRoute = ({ coordinates }) => {
   return (
     <Source
       type="geojson"
