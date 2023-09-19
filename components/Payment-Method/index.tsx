@@ -26,7 +26,7 @@ const PaymentMethod = () => {
         payment: { ...selectedPayment },
       });
     }
-  }, [selected, updateBooking]);
+  }, [selected]);
 
   return (
     <div>
@@ -49,6 +49,8 @@ const PaymentMethod = () => {
                 src={payment.image}
                 alt=""
                 className=" h-full object-contain"
+                width={300}
+                height={300}
               />
             </div>
           );

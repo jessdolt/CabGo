@@ -31,7 +31,13 @@ const Navbar = () => {
       <Wrapper>
         <nav className="w-full flex gap-4 items-center">
           <Link className="h-[100px]" href="/">
-            <Image src="./logo_3.png" alt="" className="h-full" />
+            <Image
+              src="/logo_3.png"
+              alt=""
+              className="h-full"
+              width={150}
+              height={150}
+            />
           </Link>
           <ul className="flex gap-4">
             {links.map((link) => {

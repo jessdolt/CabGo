@@ -104,7 +104,6 @@ const Booking = () => {
         } catch (e) {
           console.log(e);
         }
-        // updateBooking({ from: "" });
         break;
       }
       case SearchType.TO: {
@@ -121,7 +120,6 @@ const Booking = () => {
         } catch (e) {
           console.log(e);
         }
-        // updateBooking({ from: "" });
         break;
       }
     }
@@ -223,9 +221,11 @@ const Booking = () => {
 
         <div className="h-[660px] flex-1">
           <Image
-            src="./hero_1.png"
+            src="/hero_1.png"
             alt=""
             className="h-full  object-contain ml-auto"
+            width={800}
+            height={800}
           />
         </div>
       </div>

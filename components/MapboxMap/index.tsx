@@ -47,12 +47,12 @@ const MapboxComponent = () => {
     getCurrentLocation();
   }, []);
 
-  useEffect(() => {
-    const fetchDirections = async () => {
-      const t = await retrieveDirections(coordinates);
-      updateBooking({ directionDetail: t.routes[0] });
-    };
+  const fetchDirections = async () => {
+    const t = await retrieveDirections(coordinates);
+    updateBooking({ directionDetail: t.routes[0] });
+  };
 
+  useEffect(() => {
     if (coordinates.length > 1) {
       mapRef.current?.flyTo({
         center: [coordinates[1].longitude, coordinates[1].latitude],
@@ -68,7 +68,7 @@ const MapboxComponent = () => {
         duration: 2500,
       });
     }
-  }, [coordinates, updateBooking]);
+  }, [coordinates]);
 
   if (!initialViewState) return <div>Loading...</div>;
 
@@ -98,7 +98,7 @@ const MapboxComponent = () => {
             latitude={data.latitude}
             key={data.id}
           >
-            <Image src="./pin.png" className="w-10 h-10" alt="" />
+            <img src="/pin.png" className="w-10 h-10" alt="" />
           </Marker>
         );
       })}

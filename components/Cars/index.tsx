@@ -23,7 +23,7 @@ const Cars = () => {
         car: { ...selectedCar, price: priceRate * selectedCar.price },
       });
     }
-  }, [selected, updateBooking, priceRate]);
+  }, [selected, priceRate]);
 
   const handleCarSelect = (car: Car) => {
     if (selected === car.id) setSelected(null);
@@ -51,6 +51,8 @@ const Cars = () => {
                 src={car.image ? car.image : ""}
                 alt={car.label}
                 className="h-full -mt-6"
+                width={300}
+                height={300}
               />
               <p className="-mt-6 text-center font-bold">
                 {from && to && directionDetail && getPrice(car.price)}
