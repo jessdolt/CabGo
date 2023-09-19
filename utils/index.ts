@@ -54,7 +54,7 @@ export const calculateETA = (durationInSeconds: number) => {
   }
 };
 
-// Example usage:
-const durationInSeconds = 3720; // 62 minutes
-const etaValue = calculateETA(durationInSeconds);
-console.log(etaValue); // Output: "1 hour 2 mins"
+// // Example usage:
+// const durationInSeconds = 3720; // 62 minutes
+// const etaValue = calculateETA(durationInSeconds);
+// console.log(etaValue); // Output: "1 hour 2 mins"

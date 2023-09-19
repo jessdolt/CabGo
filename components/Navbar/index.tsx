@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { UserButton, useAuth, useUser } from "@clerk/nextjs";
-
+import LogoImage from "../../public/logo_3.png";
 import Wrapper from "../Wrapper";
 import Link from "next/link";
 import Image from "next/image";
