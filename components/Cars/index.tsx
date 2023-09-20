@@ -3,6 +3,7 @@ import { Car } from "./interface";
 import { carList } from "./constants";
 import useBooking from "@/hooks/useBooking";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 const Cars = () => {
   const { from, to, directionDetail, updateBooking } = useBooking();
@@ -26,6 +27,11 @@ const Cars = () => {
   }, [selected, priceRate]);
 
   const handleCarSelect = (car: Car) => {
+    if (!directionDetail) {
+      toast.error("Please select a destination first");
+      return;
+    }
+
     if (selected === car.id) setSelected(null);
     else setSelected(car.id);
   };
@@ -40,11 +46,12 @@ const Cars = () => {
       <div className="flex justify-center gap-4 ">
         {carList.map((car) => {
           return (
-            <div
+            <button
               className={`w-40 h-40 cursor-pointer p-3 outline outline-slate-200 outline-1 duration-100
                ${selected === car.id && "outline-2 outline-yellow-400"}`}
               onClick={() => handleCarSelect(car)}
               key={car.id}
+              type="button"
             >
               <p className="text-center font-bold text-lg">{car.label}</p>
               <Image
@@ -57,7 +64,7 @@ const Cars = () => {
               <p className="-mt-6 text-center font-bold">
                 {from && to && directionDetail && getPrice(car.price)}
               </p>
-            </div>
+            </button>
           );
         })}
       </div>

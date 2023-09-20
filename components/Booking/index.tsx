@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { fetchAddress, retrieveAddress } from "./services";
 import useBooking from "@/hooks/useBooking";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 enum SearchType {
   FROM = "from",
@@ -17,7 +18,6 @@ const Booking = () => {
     to: toValue,
     updateBooking,
     handleUpdateCoordinates,
-    coordinates,
   } = useBooking();
 
   const [suggestions, setSuggestions] = useState([]);
@@ -101,6 +101,9 @@ const Booking = () => {
             response?.features[0]?.geometry.coordinates;
 
           handleUpdateCoordinates({ id: 1, longitude, latitude });
+          updateBooking({
+            fromFinal: finalAddress,
+          });
         } catch (e) {
           console.log(e);
         }
@@ -117,6 +120,9 @@ const Booking = () => {
             response?.features[0]?.geometry.coordinates;
 
           handleUpdateCoordinates({ id: 2, longitude, latitude });
+          updateBooking({
+            toFinal: finalAddress,
+          });
         } catch (e) {
           console.log(e);
         }
@@ -127,7 +133,26 @@ const Booking = () => {
 
   const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    // console.log(toValue, fromValue);
+
+    if (!fromValue) {
+      toast.error("Please choose a pick-up location");
+      return;
+    }
+    if (!toValue) {
+      toast.error("Please choose a drop-off location");
+      return;
+    }
+
+    const bookingSection = document.getElementById("booking-section");
+
+    // Scroll to the section if found
+    if (bookingSection) {
+      bookingSection.scrollIntoView({
+        behavior: "smooth",
+        block: "center", // Center the element vertically
+        inline: "start", // Scroll to the start of the element
+      });
+    }
   };
 
   return (
@@ -151,6 +176,7 @@ const Booking = () => {
                 onChange={(e) =>
                   handleInputChange(SearchType.FROM, e.target.value)
                 }
+                autoComplete="off"
               />
               <div className="bg-white shadow-lg absolute w-full z-10">
                 {suggestions.map((suggestion: any) => {
@@ -187,6 +213,7 @@ const Booking = () => {
                 onChange={(e) =>
                   handleInputChange(SearchType.TO, e.target.value)
                 }
+                autoComplete="off"
               />
               <div className="bg-white shadow-lg absolute w-full">
                 {toSuggestions.map((suggestion: any) => {

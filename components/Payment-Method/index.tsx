@@ -3,13 +3,19 @@ import { paymentList } from "./constants";
 import { PaymentMethod } from "./interface";
 import useBooking from "@/hooks/useBooking";
 import Image from "next/image";
+import { toast } from "react-toastify";
 
 const PaymentMethod = () => {
-  const { updateBooking, payment } = useBooking();
+  const { updateBooking, payment, directionDetail } = useBooking();
 
   const [selected, setSelected] = useState<number | null>(null);
 
   const handleSelected = (payment: PaymentMethod) => {
+    if (!directionDetail) {
+      toast.error("Please select a destination first");
+      return;
+    }
+
     if (selected === payment.id) setSelected(null);
     else setSelected(payment.id);
   };

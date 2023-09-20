@@ -6,10 +6,12 @@ import useBooking from "@/hooks/useBooking";
 import { retrieveDirections } from "../Booking/services";
 import MapboxRoute from "./MapboxRoute";
 import Image from "next/image";
+import Loading from "./Loading";
+import useCheckout from "@/hooks/useCheckout";
 const MapboxComponent = () => {
   const mapRef = useRef<MapRef>(null);
   const { coordinates, updateBooking, directionDetail } = useBooking();
-
+  const { loading } = useCheckout();
   const [initialViewState, setInitialViewState] = useState<{
     longitude: number;
     latitude: number;
@@ -73,38 +75,45 @@ const MapboxComponent = () => {
   if (!initialViewState) return <div>Loading...</div>;
 
   return (
-    <Map
-      mapboxAccessToken={`${process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}`}
-      initialViewState={{
-        longitude: initialViewState.longitude,
-        latitude: initialViewState.latitude,
-        zoom: 12,
-      }}
-      ref={mapRef}
-      style={{ width: "100%", height: 620, borderRadius: 10 }}
-      mapStyle="mapbox://styles/mapbox/streets-v9"
-    >
-      {/* <Marker
-        longitude={initialViewState.longitude}
-        latitude={initialViewState.latitude}
+    <div className="relative">
+      {loading && <Loading />}
+
+      <Map
+        mapboxAccessToken={`${process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}`}
+        initialViewState={{
+          longitude: initialViewState.longitude,
+          latitude: initialViewState.latitude,
+          zoom: 12,
+        }}
+        ref={mapRef}
+        style={{ width: "100%", height: 650, borderRadius: 10 }}
+        mapStyle="mapbox://styles/mapbox/streets-v9"
       >
-        <img src="./pin.png" className="w-10 h-10" />
-      </Marker> */}
+        <Marker
+          longitude={initialViewState.longitude}
+          latitude={initialViewState.latitude}
+        >
+          <div className="flex justify-center flex-col items-center">
+            <img src="/personpin.png" className="w-10 h-10" />
+            <p>You are here</p>
+          </div>
+        </Marker>
 
-      {coordinates.map((data) => {
-        return (
-          <Marker
-            longitude={data.longitude}
-            latitude={data.latitude}
-            key={data.id}
-          >
-            <img src="/pin.png" className="w-10 h-10" alt="" />
-          </Marker>
-        );
-      })}
+        {coordinates.map((data) => {
+          return (
+            <Marker
+              longitude={data.longitude}
+              latitude={data.latitude}
+              key={data.id}
+            >
+              <img src="/pin.png" className="w-10 h-10" alt="" />
+            </Marker>
+          );
+        })}
 
-      {directionDetail && <MapboxRoute coordinates={directionDetail} />}
-    </Map>
+        {directionDetail && <MapboxRoute coordinates={directionDetail} />}
+      </Map>
+    </div>
   );
 };
 

@@ -21,6 +21,8 @@ export type Routes = {
 export interface BookingInitial {
   from: string;
   to: string;
+  fromFinal?: string;
+  toFinal?: string;
   car?: Car;
   payment?: PaymentMethod;
   coordinates: Coordinates[];
@@ -32,6 +34,8 @@ export interface BookingInitial {
 export const bookingInitialvalue = {
   from: "",
   to: "",
+  fromFinal: "",
+  toFinal: "",
   car: undefined,
   payment: undefined,
   coordinates: [],

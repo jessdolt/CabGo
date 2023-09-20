@@ -6,8 +6,17 @@ import {
 } from "./context/BookingProvider";
 
 const useBooking = () => {
-  const { from, to, setBooking, coordinates, directionDetail, car, payment } =
-    useContext(BookingContext);
+  const {
+    from,
+    to,
+    setBooking,
+    coordinates,
+    directionDetail,
+    fromFinal,
+    toFinal,
+    car,
+    payment,
+  } = useContext(BookingContext);
 
   const updateBooking = (value: Partial<BookingInitial>) => {
     setBooking((prevBooking) => ({
@@ -52,6 +61,8 @@ const useBooking = () => {
     from,
     to,
     car,
+    fromFinal,
+    toFinal,
     directionDetail,
     updateBooking,
     setBooking,
