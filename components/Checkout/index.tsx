@@ -35,7 +35,7 @@ const Checkout = () => {
             resolve(t);
           }
         },
-        signal.aborted ? 0 : 3000
+        signal.aborted ? 0 : 6500
       );
 
       return () => clearTimeout(timer);

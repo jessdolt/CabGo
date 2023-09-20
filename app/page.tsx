@@ -35,7 +35,7 @@ export default function Home() {
           </div>
         )}
       </section>
-      <section className="h-[50vh]"></section>
+      <section className="h-[20vh]"></section>
     </main>
   );
 }
