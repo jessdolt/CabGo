@@ -17,19 +17,22 @@ export default function Home() {
       <section className="my-4 h-[80vh]">
         <Booking />
       </section>
-      <section className="flex my-4 " id="booking-section">
-        <div className="w-1/2">
+      <section
+        className="flex flex-col md:flex-row gap-4 my-4 "
+        id="booking-section"
+      >
+        <div className="w-full md:w-1/2">
           <MapboxComponent />
         </div>
 
         {!driver ? (
-          <div className="w-1/2 max-w-[500px] mx-auto flex gap-5 flex-col px-4">
+          <div className="w-full md:w-1/2 max-w-[500px] mx-auto flex gap-5 flex-col md:px-4">
             <Cars />
             <PaymentMethod />
             <Checkout />
           </div>
         ) : (
-          <div className="w-1/2 max-w-[450px] mx-auto flex gap-2 flex-col">
+          <div className="w-full md:w-1/2 max-w-[450px] mx-auto flex gap-2 flex-col">
             <Driver />
             <Details />
           </div>

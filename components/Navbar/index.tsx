@@ -44,7 +44,7 @@ const Navbar = () => {
               height={150}
             />
           </Link>
-          <ul className="flex gap-4">
+          <ul className=" gap-4 hidden md:flex">
             {links.map((link) => {
               return (
                 <Link key={link.id} href={link.url}>

@@ -156,105 +156,99 @@ const Booking = () => {
   };
 
   return (
-    <div className="">
-      <div className="flex">
-        <form className="flex flex-col w-1/2 max-w-[600px] justify-center  gap-6">
-          <h1 className="text-4xl font-bold  text-black">
-            Book your <span className="color-primary">Cab&Go</span>
-          </h1>
-          <div className="flex flex-col">
-            <label htmlFor="from" className="mb-2">
-              Pick Up:
-            </label>
+    <div className="flex h-full">
+      <form className="flex flex-col w-full md:1/2  max-w-[600px] justify-center  gap-6">
+        <h1 className="text-4xl font-bold  text-black">
+          Book your <span className="color-primary">Cab&Go</span>
+        </h1>
+        <div className="flex flex-col">
+          <label htmlFor="from" className="mb-2">
+            Pick Up:
+          </label>
 
-            <div className="relative">
-              <input
-                type="text"
-                id="from"
-                ref={fromRef}
-                className="input w-full"
-                onChange={(e) =>
-                  handleInputChange(SearchType.FROM, e.target.value)
-                }
-                autoComplete="off"
-              />
-              <div className="bg-white shadow-lg absolute w-full z-10">
-                {suggestions.map((suggestion: any) => {
-                  const valueBelow = suggestion?.full_address
-                    ? suggestion?.full_address
-                    : suggestion?.place_formatted;
+          <div className="relative">
+            <input
+              type="text"
+              id="from"
+              ref={fromRef}
+              className="input w-full"
+              onChange={(e) =>
+                handleInputChange(SearchType.FROM, e.target.value)
+              }
+              autoComplete="off"
+            />
+            <div className="bg-white shadow-lg absolute w-full z-10">
+              {suggestions.map((suggestion: any) => {
+                const valueBelow = suggestion?.full_address
+                  ? suggestion?.full_address
+                  : suggestion?.place_formatted;
 
-                  return (
-                    <div
-                      key={suggestion?.mapbox_id}
-                      className="px-4 py-1 cursor-pointer hover:bg-slate-100"
-                      onClick={() =>
-                        handleValueChange(SearchType.FROM, suggestion)
-                      }
-                    >
-                      <p className="font-bold">{suggestion?.name}</p>
-                      <p className="text-xs">{valueBelow}</p>
-                    </div>
-                  );
-                })}
-              </div>
+                return (
+                  <div
+                    key={suggestion?.mapbox_id}
+                    className="px-4 py-1 cursor-pointer hover:bg-slate-100"
+                    onClick={() =>
+                      handleValueChange(SearchType.FROM, suggestion)
+                    }
+                  >
+                    <p className="font-bold">{suggestion?.name}</p>
+                    <p className="text-xs">{valueBelow}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
-          <div className="flex flex-col">
-            <label htmlFor="to" className="mb-2">
-              Drop-off:
-            </label>
-            <div className="relative">
-              <input
-                type="text"
-                id="from"
-                ref={toRef}
-                className="input w-full -z-10"
-                onChange={(e) =>
-                  handleInputChange(SearchType.TO, e.target.value)
-                }
-                autoComplete="off"
-              />
-              <div className="bg-white shadow-lg absolute w-full">
-                {toSuggestions.map((suggestion: any) => {
-                  const valueBelow = suggestion?.full_address
-                    ? suggestion?.full_address
-                    : suggestion?.place_formatted;
-
-                  return (
-                    <div
-                      key={suggestion?.mapbox_id}
-                      className="px-4 py-1 cursor-pointer hover:bg-slate-100"
-                      onClick={() =>
-                        handleValueChange(SearchType.TO, suggestion)
-                      }
-                    >
-                      <p className="font-bold">{suggestion?.name}</p>
-                      <p className="text-xs">{valueBelow}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-          <button
-            className="btn-primary mr-auto mt-2"
-            type="button"
-            onClick={handleSubmit}
-          >
-            Find a caber
-          </button>
-        </form>
-
-        <div className="h-[660px] flex-1">
-          <Image
-            src="/hero_1.png"
-            alt=""
-            className="h-full  object-contain ml-auto"
-            width={800}
-            height={800}
-          />
         </div>
+        <div className="flex flex-col">
+          <label htmlFor="to" className="mb-2">
+            Drop-off:
+          </label>
+          <div className="relative">
+            <input
+              type="text"
+              id="from"
+              ref={toRef}
+              className="input w-full -z-10"
+              onChange={(e) => handleInputChange(SearchType.TO, e.target.value)}
+              autoComplete="off"
+            />
+            <div className="bg-white shadow-lg absolute w-full">
+              {toSuggestions.map((suggestion: any) => {
+                const valueBelow = suggestion?.full_address
+                  ? suggestion?.full_address
+                  : suggestion?.place_formatted;
+
+                return (
+                  <div
+                    key={suggestion?.mapbox_id}
+                    className="px-4 py-1 cursor-pointer hover:bg-slate-100"
+                    onClick={() => handleValueChange(SearchType.TO, suggestion)}
+                  >
+                    <p className="font-bold">{suggestion?.name}</p>
+                    <p className="text-xs">{valueBelow}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+        <button
+          className="btn-primary mr-auto mt-2"
+          type="button"
+          onClick={handleSubmit}
+        >
+          Find a caber
+        </button>
+      </form>
+
+      <div className="h-[660px] flex-1 hidden md:block">
+        <Image
+          src="/hero_1.png"
+          alt=""
+          className="h-full  object-contain ml-auto"
+          width={800}
+          height={800}
+        />
       </div>
     </div>
   );
