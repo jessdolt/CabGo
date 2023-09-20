@@ -52,7 +52,7 @@ const Driver = () => {
       </div>
 
       <p className="text-slate-400 text-sm text-center mt-1">
-        Your driver's been vaccinated against COVID-19.
+        Your driver&#39;s been vaccinated against COVID-19.
       </p>
 
       <div className="flex w-full  mx-auto gap-2">

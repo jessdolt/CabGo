@@ -9,8 +9,8 @@ const Ratings = () => {
 
   return (
     <div className="flex gap-[2px]">
-      {rate.map(() => (
-        <SolidStarIcon className="w-5 text-yellow-400" />
+      {rate.map((i) => (
+        <SolidStarIcon className="w-5 text-yellow-400" key={i} />
       ))}
     </div>
   );
