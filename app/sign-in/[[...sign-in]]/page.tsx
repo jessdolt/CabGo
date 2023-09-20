@@ -1,11 +1,11 @@
+"use client";
 import { SignIn } from "@clerk/nextjs";
+import AuthCover from "@/components/AuthCover";
 
 export default function Page() {
   return (
-    <div className="flex justify-center  mt-10">
-      <div className="">
-        <SignIn />
-      </div>
-    </div>
+    <AuthCover>
+      <SignIn />
+    </AuthCover>
   );
 }

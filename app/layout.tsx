@@ -7,9 +7,9 @@ import BookingProvider from "@/hooks/context/BookingProvider";
 import React from "react";
 import { ToastContainer } from "react-toastify";
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
-
 import "react-toastify/dist/ReactToastify.css";
 import CheckoutProvider from "@/hooks/context/CheckoutProvider";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,9 +28,10 @@ export default function RootLayout({
         <CheckoutProvider>
           <html lang="en">
             <body>
-              <main className={inter.className}>
+              <main className={`${inter.className} `}>
                 <Navbar />
                 <Wrapper>{children}</Wrapper>
+                <Footer />
               </main>
               <ToastContainer
                 position="bottom-right"

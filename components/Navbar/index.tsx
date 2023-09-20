@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
-import { UserButton, useAuth, useUser } from "@clerk/nextjs";
-import LogoImage from "../../public/logo_3.png";
+import { UserButton, useAuth } from "@clerk/nextjs";
 import Wrapper from "../Wrapper";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+
 const links = [
   {
     id: 1,
@@ -24,7 +25,11 @@ const links = [
 ];
 
 const Navbar = () => {
+  const pathname = usePathname();
+
   const { isSignedIn } = useAuth();
+
+  if (pathname === "/sign-in" || pathname === "/sign-up") return null;
 
   return (
     <header className="bg-primary ">
